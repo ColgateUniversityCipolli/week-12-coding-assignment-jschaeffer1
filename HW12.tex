@@ -1,0 +1,282 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[margin=1.0in]{geometry} % To set margins
+\usepackage{amsmath}  % This allows me to use the align functionality.
+                      % If you find yourself trying to replicate
+                      % something you found online, ensure you're
+                      % loading the necessary packages!
+\usepackage{amsfonts} % Math font
+\usepackage{fancyvrb}
+\usepackage{hyperref} % For including hyperlinks
+\usepackage[shortlabels]{enumitem}% For enumerated lists with labels specified
+                                  % We had to run tlmgr_install("enumitem") in R
+\usepackage{float}    % For telling R where to put a table/figure
+\usepackage{natbib}        %For the bibliography
+\bibliographystyle{apalike}%For the bibliography
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item A group of researchers is running an experiment over the course of 30 months, 
+with a single observation collected at the end of each month. Let $X_1, ..., X_{30}$
+denote the observations for each month. From prior studies, the researchers know that
+\[X_i \sim f_X(x),\]
+but the mean $\mu_X$ is unknown, and they wish to conduct the following test
+\begin{align*}
+H_0&: \mu_X = 0\\
+H_a&: \mu_X > 0.
+\end{align*}
+At month $k$, they have accumulated data $X_1, ..., X_k$ and they have the 
+$t$-statistic
+\[T_k = \frac{\bar{X} - 0}{S_k/\sqrt{n}}.\]
+The initial plan was to test the hypotheses after all data was collected (at the 
+end of month 30), at level $\alpha=0.05$. However, conducting the experiment is 
+expensive, so the researchers want to ``peek" at the data at the end of month 20 
+to see if they can stop it early. That is, the researchers propose to check 
+whether $t_{20}$ provides statistically discernible support for the alternative. 
+If it does, they will stop the experiment early and report support for the 
+researcher's alternative hypothesis. If it does not, they will continue to month 
+30 and test whether $t_{30}$ provides statistically discernible support for the
+alternative.
+
+\begin{enumerate}
+  \item What values of $t_{20}$ provide statistically discernible support for the
+  alternative hypothesis?
+  
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+ \hlkwd{library}\hldef{(tidyverse)}
+\hlkwd{library}\hldef{(VGAM)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: package 'VGAM' was built under R version 4.4.3}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: stats4}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: splines}}\begin{alltt}
+\hlcom{#Question 1}
+
+\hlcom{#Part a}
+\hldef{t_val20} \hlkwb{=} \hlkwd{qt}\hldef{(}\hlnum{0.95}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{19}\hldef{)}
+\hldef{t_val20}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.729133
+\end{verbatim}
+\begin{alltt}
+\hlcom{#Part b}
+\hldef{t_val30} \hlkwb{=} \hlkwd{qt}\hldef{(}\hlnum{0.95}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{29}\hldef{)}
+\hldef{t_val30}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.699127
+\end{verbatim}
+\begin{alltt}
+\hlcom{#Part c}
+\hldef{R}\hlkwb{=}\hlnum{10000}
+\hldef{err20} \hlkwb{=} \hlnum{0}
+\hldef{err30} \hlkwb{=} \hlnum{0}
+
+\hlkwa{for}\hldef{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hldef{R)\{}
+\hlkwd{set.seed}\hldef{(}\hlnum{7272}\hlopt{+}\hldef{i)}
+\hldef{x20} \hlkwb{=} \hlkwd{rlaplace}\hldef{(}\hlnum{20}\hldef{,}\hlnum{0}\hldef{,}\hlnum{4}\hldef{)} \hlcom{#Calculating sample}
+\hldef{t20} \hlkwb{=} \hlkwd{mean}\hldef{(x20)} \hlopt{/} \hldef{(}\hlkwd{sd}\hldef{(x20)}\hlopt{/}\hlkwd{sqrt}\hldef{(}\hlnum{20}\hldef{))} \hlcom{#Calculating t20}
+\hlkwa{if} \hldef{(t20}\hlopt{>}\hldef{t_val20)} \hlcom{#If type1 error, add 1}
+  \hldef{err20}\hlkwb{=}\hldef{err20}\hlopt{+}\hlnum{1}
+
+\hldef{x30} \hlkwb{=} \hlkwd{rlaplace}\hldef{(}\hlnum{30}\hldef{,}\hlnum{0}\hldef{,}\hlnum{4}\hldef{)} \hlcom{#Calculating sample}
+\hldef{t30} \hlkwb{=} \hlkwd{mean}\hldef{(x30)} \hlopt{/} \hldef{(}\hlkwd{sd}\hldef{(x30)}\hlopt{/}\hlkwd{sqrt}\hldef{(}\hlnum{30}\hldef{))} \hlcom{#Calculating t30}
+\hlkwa{if} \hldef{(t30}\hlopt{>}\hldef{t_val30)}
+  \hldef{err30}\hlkwb{=}\hldef{err30}\hlopt{+}\hlnum{1}
+\hldef{\}}
+\hlcom{#Calculating percentage of t error}
+\hldef{perc_err20} \hlkwb{=} \hldef{err20}\hlopt{/}\hldef{R}
+\hldef{perc_err30}\hlkwb{=} \hldef{err30}\hlopt{/}\hldef{R}
+
+\hldef{perc_err20}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0507
+\end{verbatim}
+\begin{alltt}
+\hldef{perc_err30}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.05
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  \item What values of $t_{30}$ provide statistically discernible support for the
+  alternative hypothesis?
+  \item Suppose $f_X(x)$ is a Laplace distribution with $a=0$ and $b=4.0$.
+  Conduct a simulation study to assess the Type I error rate of this approach.\\
+  \textbf{Note:} You can use the \texttt{rlaplace()} function from the \texttt{VGAM}
+  package for \texttt{R} \citep{VGAM}.
+  \item \textbf{Optional Challenge:} Can you find a value of $\alpha<0.05$ that yields a 
+  Type I error rate of 0.05?
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Question 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \item Perform a simulation study to assess the robustness of the $T$ test. 
+  Specifically, generate samples of size $n=15$ from the Beta(10,2), Beta(2,10), 
+  and Beta(10,10) distributions and conduct the following hypothesis tests against 
+  the actual mean for each case (e.g., $\frac{10}{10+2}$, $\frac{2}{10+2}$, and 
+  $\frac{10}{10+10}$). 
+  \begin{enumerate}
+    \item What proportion of the time do we make an error of Type I for a
+    left-tailed test?
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{############################}
+\hlcom{#####    QUESTION 2    #####}
+\hlcom{############################}
+\hldef{n}\hlkwb{=}\hlnum{15} \hlcom{#Initializing}
+\hldef{R}\hlkwb{=}\hlnum{10000}
+\hldef{mean1} \hlkwb{=} \hlnum{10}\hlopt{/}\hlnum{12}
+\hldef{mean2} \hlkwb{=} \hlnum{2}\hlopt{/}\hlnum{12}
+\hldef{mean3} \hlkwb{=} \hlnum{10}\hlopt{/}\hlnum{20}
+\hldef{err1_left}\hlkwb{=}\hlnum{0}
+\hldef{err2_left}\hlkwb{=}\hlnum{0}
+\hldef{err3_left}\hlkwb{=}\hlnum{0}
+
+\hldef{err1_right}\hlkwb{=}\hlnum{0}
+\hldef{err2_right}\hlkwb{=}\hlnum{0}
+\hldef{err3_right}\hlkwb{=}\hlnum{0}
+
+\hldef{err1_two}\hlkwb{=}\hlnum{0}
+\hldef{err2_two}\hlkwb{=}\hlnum{0}
+\hldef{err3_two}\hlkwb{=}\hlnum{0}
+\hlkwa{for}\hldef{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hldef{R)\{}
+  \hlkwd{set.seed}\hldef{(}\hlnum{7272}\hlopt{+}\hldef{i)}
+  \hldef{sample1} \hlkwb{=} \hlkwd{rbeta}\hldef{(n,} \hlnum{10}\hldef{,} \hlnum{2}\hldef{)} \hlcom{#Calculating samples}
+  \hldef{sample2} \hlkwb{=} \hlkwd{rbeta}\hldef{(n,} \hlnum{2}\hldef{,} \hlnum{10}\hldef{)}
+  \hldef{sample3} \hlkwb{=} \hlkwd{rbeta}\hldef{(n,} \hlnum{10}\hldef{,} \hlnum{10}\hldef{)}
+
+  \hlcom{#Calculating t values}
+  \hldef{t1} \hlkwb{=} \hldef{(}\hlkwd{mean}\hldef{(sample1)}\hlopt{-}\hldef{mean1)}\hlopt{/}\hldef{(}\hlkwd{sd}\hldef{(sample1)}\hlopt{/}\hlkwd{sqrt}\hldef{(n))}
+  \hldef{t2} \hlkwb{=} \hldef{(}\hlkwd{mean}\hldef{(sample2)}\hlopt{-}\hldef{mean2)}\hlopt{/}\hldef{(}\hlkwd{sd}\hldef{(sample2)}\hlopt{/}\hlkwd{sqrt}\hldef{(n))}
+  \hldef{t3} \hlkwb{=} \hldef{(}\hlkwd{mean}\hldef{(sample3)}\hlopt{-}\hldef{mean3)}\hlopt{/}\hldef{(}\hlkwd{sd}\hldef{(sample3)}\hlopt{/}\hlkwd{sqrt}\hldef{(n))}
+  \hlcom{#Checking if type 1 error occurred for left test}
+  \hlkwa{if} \hldef{(t1}\hlopt{<}\hlkwd{qt}\hldef{(}\hlnum{0.05}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err1_left}\hlkwb{=}\hldef{err1_left}\hlopt{+}\hlnum{1}
+  \hlkwa{if} \hldef{(t2}\hlopt{<}\hlkwd{qt}\hldef{(}\hlnum{0.05}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err2_left}\hlkwb{=}\hldef{err2_left}\hlopt{+}\hlnum{1}
+  \hlkwa{if} \hldef{(t3}\hlopt{<}\hlkwd{qt}\hldef{(}\hlnum{0.05}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err3_left}\hlkwb{=}\hldef{err3_left}\hlopt{+}\hlnum{1}
+
+
+  \hlcom{#Checking if type 1 error occurred for right test}
+  \hlkwa{if} \hldef{(t1}\hlopt{>}\hlkwd{qt}\hldef{(}\hlnum{0.95}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err1_right}\hlkwb{=}\hldef{err1_right}\hlopt{+}\hlnum{1}
+  \hlkwa{if} \hldef{(t2}\hlopt{>}\hlkwd{qt}\hldef{(}\hlnum{0.95}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err2_right}\hlkwb{=}\hldef{err2_right}\hlopt{+}\hlnum{1}
+  \hlkwa{if} \hldef{(t3}\hlopt{>}\hlkwd{qt}\hldef{(}\hlnum{0.95}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err3_right}\hlkwb{=}\hldef{err3_right}\hlopt{+}\hlnum{1}
+
+
+  \hlcom{#Checking if type 1 error occurred for two tailed test}
+  \hlkwa{if} \hldef{(}\hlkwd{abs}\hldef{(t1)}\hlopt{>}\hlkwd{qt}\hldef{(}\hlnum{0.975}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err1_two}\hlkwb{=}\hldef{err1_two}\hlopt{+}\hlnum{1}
+  \hlkwa{if} \hldef{(}\hlkwd{abs}\hldef{(t2)}\hlopt{>}\hlkwd{qt}\hldef{(}\hlnum{0.975}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err2_two}\hlkwb{=}\hldef{err2_two}\hlopt{+}\hlnum{1}
+  \hlkwa{if} \hldef{(}\hlkwd{abs}\hldef{(t3)}\hlopt{>}\hlkwd{qt}\hldef{(}\hlnum{0.975}\hldef{,} \hlkwc{df}\hldef{=}\hlnum{14}\hldef{))}
+    \hldef{err3_two}\hlkwb{=}\hldef{err3_two}\hlopt{+}\hlnum{1}
+
+\hldef{\}}
+
+\hldef{err1_left}\hlopt{/}\hldef{R}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0303
+\end{verbatim}
+\begin{alltt}
+\hldef{err2_left}\hlopt{/}\hldef{R}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0769
+\end{verbatim}
+\begin{alltt}
+\hldef{err3_left}\hlopt{/}\hldef{R}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0477
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+    \item What proportion of the time do we make an error of Type I for a
+    right-tailed test?
+    \item What proportion of the time do we make an error of Type I for a
+    two-tailed test?
+    \item How does skewness of the underlying population distribution effect
+    Type I error across the test types?
+  \end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{enumerate}
+\bibliography{bibliography}
+\end{document}

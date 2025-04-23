@@ -54,7 +54,7 @@ err3_right=0
 err1_two=0
 err2_two=0
 err3_two=0
-for(i in R){
+for(i in 1:R){
   set.seed(7272+i)
   sample1 = rbeta(n, 10, 2) #Calculating samples
   sample2 = rbeta(n, 2, 10)
@@ -89,19 +89,20 @@ for(i in R){
     err2_two=err2_two+1
   if (abs(t3)>qt(0.975, df=14))
     err3_two=err3_two+1
+
 }
 
-err1_left
-err2_left
-err3_left
+err1_left/R
+err2_left/R
+err3_left/R
 
-err1_right
-err2_right
-err3_right
+err1_right/R
+err2_right/R
+err3_right/R
 
-err1_two
-err2_two
-err3_two
+err1_two/R
+err2_two/R
+err3_two/R
 
 
 
